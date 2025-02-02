@@ -6,7 +6,7 @@ App'en indeholder følgende funktioner:
 1. Se feeds i en samlet visning
 2. Se kommentarer af hvert feed
 3. Mulighed for at tilføje nye opdateringer og kommentarer
-4. Mulighed for at tilføje reaktioner på kommentarer jf. likes, dislikes, sur og overrasket
+4. Mulighed for at tilføje reaktioner på kommentarer jf. likes, dislikes, sur og overrasket emoji
 
 # Afgrænsning
 Der er ikke introduceret avanceret styling, så de originale ressourcer er stadig anvendt. Husk dog at skrue op for lyden inden du kører app'en.
