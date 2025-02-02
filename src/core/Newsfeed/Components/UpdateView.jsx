@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CommentView from "./CommentView";
+import ProfileImageView from "./ProfileImageView";
+import ImageButtonView from "./ImageButtonView"; 
 import rudeSound from "../../../ressources/audio/rude.mp3";
 import likeIcon from "../../../ressources/images/thumbs_up_icon.svg";
 import dislikeIcon from "../../../ressources/images/thumbs_down_icon.svg";
@@ -17,30 +19,35 @@ export default function UpdateView({ update, onAddComment, onDeleteUpdate, onRea
 
   return (
     <li className="border p-4 rounded mb-2 shadow-lg bg-white">
-      <p className="text-lg font-semibold text-gray-800">{update.text}</p>
+      <div className="flex items-center space-x-3">
+        {update.imageSrc && <ProfileImageView src={update.imageSrc} alt={update.by} />}
+        <p className="text-lg font-semibold text-gray-800">{update.text}</p>
+      </div>
 
       <div className="flex space-x-2 mt-2">
-        <button className="flex items-center space-x-1 bg-green-500 text-white px-3 py-1 rounded" onClick={() => onReact(update.id, "like")}>
-          <img src={likeIcon} alt="Like" className="w-5 h-5" />
-          <span>{update.reactions.like}</span>
-        </button>
-        <button
-          className="flex items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded"
+        <ImageButtonView
+          label="Like"
+          icon={likeIcon}
+          bgColor="bg-green-500"
+          onClick={() => onReact(update.id, "like")}
+          count={update.reactions.like}
+        />
+        <ImageButtonView
+          label="Dislike"
+          icon={dislikeIcon}
+          bgColor="bg-red-500"
           onClick={() => {
             onReact(update.id, "dislike");
             playSound(rudeSound);
           }}
-        >
-          <img src={dislikeIcon} alt="Dislike" className="w-5 h-5" />
-          <span>{update.reactions.dislike}</span>
-        </button>
-        <button
-          className="flex items-center space-x-1 bg-gray-500 text-white px-3 py-1 rounded"
-          onClick={() => onDeleteUpdate(update.id)} // ✅ Calls delete function
-        >
-          <img src={deleteIcon} alt="Delete" className="w-5 h-5" />
-          <span>Delete</span>
-        </button>
+          count={update.reactions.dislike}
+        />
+        <ImageButtonView
+          label="Delete"
+          icon={deleteIcon}
+          bgColor="bg-gray-500"
+          onClick={() => onDeleteUpdate(update.id)}
+        />
       </div>
 
       <div className="mt-3">
@@ -51,18 +58,17 @@ export default function UpdateView({ update, onAddComment, onDeleteUpdate, onRea
           placeholder="Write a comment..."
           className="border p-2 w-full rounded"
         />
-        <button
-          className="flex items-center space-x-1 bg-blue-500 text-white px-4 py-2 mt-1 rounded"
+        <ImageButtonView
+          label="Comment"
+          icon={commentIcon}
+          bgColor="bg-blue-500"
           onClick={() => {
             if (commentText.trim() !== "") {
               onAddComment(update.id, commentText);
               setCommentText("");
             }
           }}
-        >
-          <img src={commentIcon} alt="Comment" className="w-5 h-5" />
-          <span>Comment</span>
-        </button>
+        />
       </div>
 
       {update.comments.length > 0 && (

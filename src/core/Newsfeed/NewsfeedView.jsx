@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { NewsFeed } from "../../shared/models/Newsfeed";
 import TitleView from "./components/TitleView";
-import ListView from "./Components/ListView";
+import ListView from "./components/ListView";
+import jarjarImage from "../../ressources/images/jarjar.jpg"; 
 
 export default function NewsFeedView() {
-  const [updates, setUpdates] = useState(NewsFeed.getSampleUpdates()); // Da vi følger View/Model pattern, henter vi blot data fra denne funktion
+  const [updates, setUpdates] = useState(NewsFeed.getSampleUpdates()); 
+
+  const handleAddUpdate = (text) => {
+    if (text.trim() === "") return;
+    const newUpdate = new NewsFeed(text, "Jar Jar", jarjarImage);
+    setUpdates([newUpdate, ...updates]); 
+  };
 
   const handleDeleteUpdate = (updateId) => {
     setUpdates(updates.filter(update => update.id !== updateId));
-  };
-  
-  const handleAddUpdate = (text) => {
-    if (text.trim() === "") return;
-
-    const newUpdate = new NewsFeed(text);
-    setUpdates([newUpdate, ...updates]); 
   };
 
   const handleAddComment = (updateId, text) => {
